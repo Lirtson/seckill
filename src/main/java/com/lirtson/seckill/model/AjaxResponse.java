@@ -1,5 +1,6 @@
 package com.lirtson.seckill.model;
 
+import com.lirtson.seckill.exception.CustomException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,9 +35,9 @@ public class AjaxResponse {
     }
 
     //请求出现异常时的响应数据封装
-    public static AjaxResponse error(Exception e) {
+    public static AjaxResponse error(CustomException e) {
         AjaxResponse resultBean = new AjaxResponse();
-        //resultBean.setCode(e.);
+        resultBean.setCode(e.getCode());
         return resultBean;
     }
 
