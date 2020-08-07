@@ -2,6 +2,8 @@ package com.lirtson.seckill.service;
 
 import com.lirtson.seckill.dao.UserDao;
 import com.lirtson.seckill.domain.User;
+import com.lirtson.seckill.exception.CustomException;
+import com.lirtson.seckill.exception.CustomExceptionType;
 import com.lirtson.seckill.model.UserVO;
 import com.lirtson.seckill.redis.RedisService;
 import com.lirtson.seckill.redis.UserKey;
@@ -41,21 +43,21 @@ public class UserService {
 
     public String login(UserVO userVo) {
         if(userVo == null) {
-            //throw new GlobalException(CodeMsg.SERVER_ERROR);
+            throw new CustomException(CustomExceptionType.SYSTEM_ERROR,"服务端异常");
         }
         Long userId = userVo.getId();
         String formPass = userVo.getPassword();
-        //判断手机号是否存在
+        //判断账号是否存在
         User user = getById(userId);
         if(user == null) {
-            //throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
+            throw new CustomException(CustomExceptionType.NOT_LOGIN,"账号不存在");
         }
         //验证密码
         String dbPass = user.getPassword();
         String saltDB = user.getSalt();
         String calcPass = MD5Util.formPassToDBPass(formPass, saltDB);
         if(!calcPass.equals(dbPass)) {
-            //throw new GlobalException(CodeMsg.PASSWORD_ERROR);
+            throw new CustomException(CustomExceptionType.NOT_LOGIN,"密码错误");
         }
         //生成token
         String token= getToken(userId);
