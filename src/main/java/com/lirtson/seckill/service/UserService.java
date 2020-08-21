@@ -84,8 +84,8 @@ public class UserService {
         String subject = "use";
         String token = null;
         try {
-            //该token过期时间为12h
-            token = JWTUtils.createJWT(claims, subject, 1000*60*60*12 );
+            //该token过期时间
+            token = JWTUtils.createJWT(claims, subject, 3600*24 * 2 );
         } catch (Exception e) {
             throw new RuntimeException("创建Token失败");
         }
