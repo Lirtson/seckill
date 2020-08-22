@@ -11,7 +11,13 @@ public enum CustomExceptionType {
 
     NOT_LOGIN(401,"用户没有权限异常"),
 
-    FORBID_WRITE(403,"禁止写入异常");
+    FORBID_WRITE(403,"禁止写入异常"),
+    /*
+    以下自定义异常
+     */
+    SECKILL_OVER(5001,"秒杀完了"),
+    REPEATE_SECKILL(5002,"重复秒杀"),
+    ORDER_NOT_EXIST(5003,"订单不存在");
 
 
     CustomExceptionType(int code, String typeDesc) {
